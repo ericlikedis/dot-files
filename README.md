@@ -1,5 +1,7 @@
 # dot-files
 
+> this is for my linux mint box, for now this will only be used for linux
+
 1) `.bashrc` - from what i know, this is just a default configuration 
 
 2) `.zshrc` - this is my preferred shell which has all the plugins and aliases set
