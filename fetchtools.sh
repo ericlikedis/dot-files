@@ -9,8 +9,8 @@ sudo apt install -y \
 	zsh \
 	git \ 
 	curl \ 
-	screenfetch\ 
-	micro
+	screenfetch \ 
+	micro \ 
 
 # ------------------------------------
 # oh my zsh
