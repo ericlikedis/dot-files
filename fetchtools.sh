@@ -46,6 +46,24 @@ else
   echo "==> zsh-syntax-highlighting already installed"
 fi
 
+# -------------------------
+# lambda-gitster theme
+# -------------------------
+THEME_DIR="$HOME/.oh-my-zsh/custom/themes"
+THEME_FILE="$THEME_DIR/lambda-gitster.zsh-theme"
+
+mkdir -p "$THEME_DIR"
+
+if [ ! -f "$THEME_FILE" ]; then
+  echo "==> Installing lambda-gitster theme..."
+  curl -fsSL \
+    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/themes/lambda-gitster.zsh-theme \
+    -o "$THEME_FILE"
+else
+  echo "==> lambda-gitster theme already installed"
+fi
+
+
 echo "==> Done!"
 echo "You can now start zsh or set it as default with: chsh -s $(which zsh)"
 

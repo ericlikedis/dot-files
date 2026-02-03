@@ -11,4 +11,4 @@
         - `zsh-autocomplete.plugin.zsh` - installs auto complete plugin
         - `zsh-syntax-highlighting.plugin.zsh` - installs syntax highlighting plugin
     - `screenfetch` installs screenfetch, i have an alias that sets it to run as `fetch`
-    - **coming soon:** `lambda-gitster` - installs lambda-gister zsh theme
+    -`lambda-gitster` - installs lambda-gister zsh theme
