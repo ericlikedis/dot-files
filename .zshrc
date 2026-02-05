@@ -122,3 +122,6 @@ alias winbins="cd /home/neo/Desktop/tools/usr/share/windows-binaries"
 # alias for moving wallpapers to wallpaper folder
 
 alias movewallpaper="sudo mv *.jpg /usr/share/xfce4/backdrops"
+
+# alias for quickly running updates
+alias update="sudo apt update && apt upgrade -y"
