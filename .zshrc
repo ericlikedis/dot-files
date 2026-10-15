@@ -1,15 +1,22 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+source "/Users/ericlikedis/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+export PATH="/Users/ericlikedis/Library/Python/2.7/bin:/Users/ericlikedis/Library/Python/3.11/bin:/Users/ericlikedis/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:bin:/usr/sbin:/sbin:/Users/ericlikedis/.fig/bin:/Users/ericlikedis/.local/bin"
+export PATH=$PATH:~/.platformio/penv/bin
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# additional plugins: 
-source /home/neo/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source /home/neo/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
+# load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="lambda-gitster"
@@ -74,9 +81,23 @@ ZSH_THEME="lambda-gitster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+	macos
+	git
+	battery
+	colored-man-pages
+	themes 
+	web-search
+	colorize
+	spotify-now
+	zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
+
+# Spotify now-playing (spotify-now plugin)
+setopt PROMPT_SUBST
+RPROMPT='$SPOTIFY_SEGMENT'
 
 # User configuration
 
@@ -89,39 +110,96 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='nvim'
+#   export EDITOR='mvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+# export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ls="colorls"
+alias btop="btop"
+alias ember-guard="python3 /usr/local/bin/ember_guard.py"
+alias dorker="python3 /Users/ericlikedis/Desktop/hax/Dorker/test4.py"
+# alias nmap='grc nmap'
 
-# my aliases
+eval "$(register-python-argcomplete --no-defaults exegol)"
 
-alias fetch="screenfetch"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# aliases for quickly moving into a directory
-alias dev="cd /home/neo/Desktop/dev"
-alias tools="cd /home/neo/Desktop/tools"
-alias winbins="cd /home/neo/Desktop/tools/usr/share/windows-binaries"
+# alias ls='colorls'
 
-# cant seem to find the shortcut for obsidian in my apps tray, creating an alias for the app image
-# alias obsidian="/home/neo/Downloads/Obsidian-1.11.5.AppImage"
+zstyle ':omz:update' mode reminder
 
-# alias for moving wallpapers to wallpaper folder
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export PATH="$PATH:$GEM_HOME/bin"
 
-alias movewallpaper="sudo mv *.jpg /usr/share/xfce4/backdrops"
+# export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.3.6/bin:$PATH"
+# export PATH="/usr/local/opt/ruby/bin:$PATH"
 
-# alias for quickly running updates
-alias update="sudo apt update && apt upgrade -y"
+# source /usr/local/share/chruby/chruby.sh
+# source /usr/local/opt/chruby/share/chruby/auto.sh
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+eval "$(rbenv init -)"
+
+### FABRIC AI FRAMEWORK STUFF:
+
+# Golang environment variables
+export GOROOT=$(brew --prefix go)/libexec
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
+
+## ADDS ALIASES FOR ALL PATTERNS
+# Loop through all files in the ~/.config/fabric/patterns directory
+for pattern_file in $HOME/.config/fabric/patterns/*; do
+    # Get the base name of the file (i.e., remove the directory path)
+    pattern_name=$(basename "$pattern_file")
+
+    # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
+    alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
+
+    # Evaluate the alias command to add it to the current shell
+    eval "$alias_command"
+done
+
+yt() {
+    local video_link="$1"
+    fabric -y "$video_link" --transcript
+}
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
+export PATH="/opt/metasploit-framework/bin:$PATH"
+
+## aliases
+alias segfault="ssh root@segfault.net"
+alias claw="ollama launch openclaw"
+alias rev="cd Desktop/hax/reverse-engineering/ILSpy"
+alias news="open https://thehackernews.com"
+alias ut="open https://youtube.com"
+alias blog="cd /Users/ericlikedis/Desktop/me/code/minimal-blog/ericlikedis.github.io"
+alias code="cd /Users/ericlikedis/Desktop/me/code"
+export PATH="$HOME/.openclaw/bin:$PATH"
+
+# OpenClaw Completion
+source "/Users/ericlikedis/.openclaw/completions/openclaw.zsh"
+export DOTNET_ROOT=/usr/local/share/dotnet
+export PATH=$PATH:$DOTNET_ROOT
+export PATH=$PATH:$HOME/.dotnet/tools
