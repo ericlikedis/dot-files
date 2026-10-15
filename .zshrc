@@ -95,6 +95,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Restore plain up/down-arrow history stepping (zsh-autocomplete replaces it with a history menu)
+bindkey -M emacs '^[[A' .up-line-or-history '^[OA' .up-line-or-history \
+                 '^[[B' .down-line-or-history '^[OB' .down-line-or-history
+bindkey -M menuselect '^[[A' .up-line-or-history '^[OA' .up-line-or-history \
+                      '^[[B' .down-line-or-history '^[OB' .down-line-or-history
+
 # Spotify now-playing (spotify-now plugin)
 setopt PROMPT_SUBST
 RPROMPT='$SPOTIFY_SEGMENT'
